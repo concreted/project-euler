@@ -23,7 +23,8 @@ def primeFactors(n):
        primfac.append(n)
     return primfac
 
-def countOccur(numbers):
+# From a list of numbers, returns a dictionary of number:count key:value pairs
+def occurrenceCount(numbers):
     counts = {}
     for i in numbers:
         if i in counts:
@@ -32,31 +33,33 @@ def countOccur(numbers):
             counts[i] = 1
     return counts
 
+# Returns set of all primes less than a given number via sieve of Eratosthenes
+def primesLessThan(num):
+    primes = range(2, num+1)
+    for i in range(len(primes)):
+        for j in range(i+1, len(primes)):
+            if primes[j] != 0 and primes[i] != 0 and primes[j] % primes[i] == 0:
+                primes[j] = 0
+    return set([i for i in primes if i != 0])
+
 maximum = 20
 
 all_factors = set(range(2, maximum+1))
 
-primes = list(all_factors)
-for i in range(len(primes)):
-    for j in range(i+1, len(primes)):
-        if primes[j] != 0 and primes[i] != 0 and primes[j] % primes[i] == 0:
-            primes[j] = 0
+prime_factors = occurrenceCount(primesLessThan(maximum))
     
-primes = countOccur(set([i for i in primes if i != 0]))
-
-all_factors.difference_update(primes)
-all_factors = list(all_factors)
+all_factors = list(all_factors.difference(prime_factors))
 
 #print all_factors
-#print primes
+#print prime_factors
 
 for i in all_factors:
-    vals = countOccur(primeFactors(i))
+    vals = occurrenceCount(primeFactors(i))
     #print vals
     for n in vals:
-        if vals[n] > primes[n]:
-            primes[n] = vals[n]
+        if vals[n] > prime_factors[n]:
+            prime_factors[n] = vals[n]
 
-#print primes
+#print prime_factors
 
-print reduce(lambda acc, n: acc * n ** primes[n], primes, 1)
+print reduce(lambda acc, n: acc * n ** prime_factors[n], prime_factors, 1)
