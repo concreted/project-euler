@@ -32,4 +32,15 @@ What is the greatest product of four adjacent numbers in any direction
 (up, down, left, right, or diagonally) in the 20 * 20 grid?
 """
 
+# Make 2D array 
 
+# Find largest product vertically
+# Find largets product horizontally
+
+# Find largest product diagonally (down L->R)
+# Starting from [0][0]:
+# arr[i][j] * arr[i+1][j+1] * arr[i+2][j+2] * arr[i+3][j+3]
+
+# Find largest product diagonally (up L->R)
+# Starting from [19][0]:
+# arr[i][j] * arr[i-1][j+1] * arr[i-2][j+2] * arr[i-3][j+3]
