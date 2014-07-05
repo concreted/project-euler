@@ -74,16 +74,18 @@ size = 20
 digits = 4
 
 grid2d = [grid[i:i+20] for i in range(0, size*size, size)]
-
+'''
 for row in grid2d:
     print row
-
+'''
 hmax = max([max([reduce(product, grid2d[i][j:j+digits], 1) for j in range(size-digits + 1)]) for i in range(size)])
 
 vmax = max([max([reduce(product, [row[j] for row in grid2d[i:i+digits]], 1) for j in range(size)]) for i in range(size-digits + 1)])
 
-dumax = 0
+dumax = max([max([reduce(product, [grid2d[i+k][j+k] for k in range(digits)], 1) for j in range(size-digits+1)]) for i in range(size-digits+1)])
+#print dumax
 
-ddmax = 0
+ddmax = max([max([reduce(product, [grid2d[i-k][j+k] for k in range(digits)], 1) for j in range(size-digits+1)]) for i in range(size-1, digits-2, -1)])
+#print ddmax
 
 print max(hmax, vmax, dumax, ddmax)
