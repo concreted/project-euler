@@ -24,5 +24,47 @@ divisors.
 What is the value of the first triangle number to have over five hundred
 divisors?
 """
+import math
 
+def factors(x):
+    #return [i for i in range(1, x+1) if x%i == 0]
+    
+    count = 1
+    for i in range(2, x+1):
+        if  x % i == 0:
+            count += 1
+    return count
 
+t_nums = [1,3,6]
+
+def triangleNumber(n):
+    #return sum(range(1, n+1));
+    
+    if len(t_nums) < n:
+        t_nums.append(t_nums[n-2] + n)
+    return t_nums[n-1]
+    
+'''
+print triangleNumber(7);
+print triangleNumber(10);
+'''
+#print factors(triangleNumber(7))
+
+i = 1
+target = 50
+
+while(True):
+    candidate = triangleNumber(i)
+    divisors = factors(candidate)
+    if divisors > target:
+        print candidate
+        quit()
+    i += 1
+'''
+
+while(True):
+    i = raw_input()
+    candidate = triangleNumber(int(i))
+    divisors = factors(candidate)
+    print candidate, divisors
+'''
