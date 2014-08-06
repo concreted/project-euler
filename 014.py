@@ -25,33 +25,6 @@ import time
 
 cache = {}
 
-def collatzSequenceCached(n):
-    if n > 0:
-        seq = [n]
-    else:
-        return []
-    
-    if n in cache:
-        #print 'found!'
-        return cache[n]    
-
-    orig_n = n
-
-    while n != 1:
-        if n % 2 == 0:
-            n = n/2
-        else:
-            n = 3*n + 1
-        if n in cache:
-            seq = seq + cache[n]
-            n = cache[n][-1]
-        else:
-            seq.append(n)
-    
-    cache[orig_n] = seq
-
-    return seq    
-
 def collatzSequence(n):
     if n > 0:
         seq = [n]
@@ -67,42 +40,54 @@ def collatzSequence(n):
     
     return seq    
 
-def longestChain(maxnum):
+def collatzSequenceCached(n):
+    if n > 0:
+        seq = [n]
+    else:
+        return []
+    
+    if n in cache:
+        return cache[n]    
+
+    orig_n = n
+
+    while n != 1:
+        if n % 2 == 0:
+            n = n/2
+        else:
+            n = 3*n + 1
+        if n in cache:
+            seq = seq + cache[n]
+            n = 1
+        else:
+            seq.append(n)
+    
+    cache[orig_n] = seq
+
+    return seq    
+
+def longestChain(maxnum, f):
     best_len = 0
     best_n = 0
     for n in range(1, maxnum):
-        current = len(collatzSequence(n))
+        current = f(n)
         if current > best_len:
             best_len = current
             best_n = n
     return best_n, best_len
 
-def longestChainCached(maxnum):
-    best_len = 0
-    best_n = 0
-    for n in range(1, maxnum):
-        current = len(collatzSequenceCached(n))
-        if current > best_len:
-            best_len = current
-            best_n = n
-    return best_n, best_len
-
-num = 1000000
-
-print longestChainCached(num)[0]
+num = 1000
+'''
+print longestChain(num, lambda n: len(collatzSequenceCached(n)))[0]
 quit()
-
+'''
 start = time.time()
-print longestChainCached(num)
+print longestChain(num, lambda n: len(collatzSequenceCached(n)))
 elapsed = time.time() - start
 print elapsed, 'seconds'
 
 start = time.time()
-print longestChain(num)
+print longestChain(num, lambda n: len(collatzSequence(n)))
 elapsed = time.time() - start
 print elapsed, 'seconds'
 
-'''
-print collatzSequence(9)
-print collatzSequenceCached(9)
-'''
