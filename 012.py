@@ -28,20 +28,30 @@ divisors?
 # Referencing:
 # http://code.jasonbhill.com/sage/project-euler-problem-12/
 
-import math
+import math, time
 
 def factors(x):
-    #return [i for i in range(1, x+1) if x%i == 0]
-
     if x % 2 == 0:
         x = x/2
-    
-    count = 1
-    for i in range(2, x+1):
-        if x % i == 0:
-            count += 1
-    return count
 
+    # Slow:
+    #return len([i for i in range(1, x+1) if x%i == 0])
+
+    divisors = 1
+    p = 2
+    while x != 1:
+        count = 1
+        while x % p == 0:
+            count += 1
+            x = x/p
+        divisors = divisors * count 
+        if p == 2:
+            p += 1
+        else:
+            p += 2
+
+    return divisors
+    
 def triangleNumber(n):
     return (n * (n+1)) / 2
 
@@ -57,6 +67,10 @@ def triangleIndex(min_factors):
 
 target = 500
 
+start = time.time()
 index = triangleIndex(target)
+elapsed = (time.time() - start)
+
 #print index
 print triangleNumber(index)
+print elapsed, 'seconds'
