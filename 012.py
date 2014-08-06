@@ -24,47 +24,39 @@ divisors.
 What is the value of the first triangle number to have over five hundred
 divisors?
 """
+
+# Referencing:
+# http://code.jasonbhill.com/sage/project-euler-problem-12/
+
 import math
 
 def factors(x):
     #return [i for i in range(1, x+1) if x%i == 0]
+
+    if x % 2 == 0:
+        x = x/2
     
     count = 1
     for i in range(2, x+1):
-        if  x % i == 0:
+        if x % i == 0:
             count += 1
     return count
 
-t_nums = [1,3,6]
-
 def triangleNumber(n):
-    #return sum(range(1, n+1));
+    return (n * (n+1)) / 2
+
+def triangleIndex(min_factors):
+    i = 1
+    l, r = factors(i), factors(i+1)
     
-    if len(t_nums) < n:
-        t_nums.append(t_nums[n-2] + n)
-    return t_nums[n-1]
-    
-'''
-print triangleNumber(7);
-print triangleNumber(10);
-'''
-#print factors(triangleNumber(7))
+    while l * r < min_factors:
+        i += 1
+        l, r = r, factors(i+1)
+    return i
 
-i = 1
-target = 50
 
-while(True):
-    candidate = triangleNumber(i)
-    divisors = factors(candidate)
-    if divisors > target:
-        print candidate
-        quit()
-    i += 1
-'''
+target = 500
 
-while(True):
-    i = raw_input()
-    candidate = triangleNumber(int(i))
-    divisors = factors(candidate)
-    print candidate, divisors
-'''
+index = triangleIndex(target)
+#print index
+print triangleNumber(index)
