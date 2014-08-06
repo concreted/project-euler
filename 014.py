@@ -21,4 +21,29 @@ Which starting number, under one million, produces the longest chain?
 NOTE: Once the chain starts the terms are allowed to go above one million.
 """
 
+def collatzSequence(n):
+    if n > 0:
+        seq = [n]
+    else:
+        return []
 
+    while n != 1:
+        if n % 2 == 0:
+            n = n/2
+        else:
+            n = 3*n + 1
+        seq.append(n)
+    
+    return seq    
+
+def longestChain(maxnum):
+    best_len = 0
+    best_n = 0
+    for n in range(1, maxnum):
+        current = len(collatzSequence(n))
+        if current > best_len:
+            best_len = current
+            best_n = n
+    return best_n, best_len
+
+print longestChain(1000)
