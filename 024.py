@@ -1,20 +1,32 @@
+"""
+Project Euler Problem #24
+==========================
+
+A permutation is an ordered arrangement of objects. For example, 3124 is
+one possible permutation of the digits 1, 2, 3 and 4. If all of the
+permutations are listed numerically or alphabetically, we call it
+lexicographic order. The lexicographic permutations of 0, 1 and 2 are:
+
+                    012   021   102   120   201   210
+
+What is the millionth lexicographic permutation of the digits 0, 1, 2, 3,
+4, 5, 6, 7, 8 and 9?
+"""
+
 def permutations(digits):
-	if len(digits) == 1:
-		return [digits]
-	else:
-		results = []
-		for i in range(len(digits)):
-			subperms = permutations(digits[:i] + digits[i+1:])
-			for s in subperms:
-				results.append([digits[i]] + s)
-		return results
+    if len(digits) == 1:
+        return [digits]
+    else:
+        results = []
+        for i in range(len(digits)):
+            subperms = permutations(digits[:i] + digits[i+1:])
+            for s in subperms:
+                results.append([digits[i]] + s)
+        return results
 	
-digits = [0,1,2,3,4,5,6,7,8,9]
-#digits = [0,1,2,3]
-digits = [str(n) for n in digits]
+digits = [str(n) for n in [0,1,2,3,4,5,6,7,8,9]]
 
 perms = [''.join(p) for p in permutations(digits)]
-#print perms
 
 perms.sort()
 print perms[999999]
