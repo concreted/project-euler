@@ -17,39 +17,17 @@ What is the sum of both diagonals in a 1001 by 1001 spiral formed in the
 same way?
 """
 
-ru_vals = [1]
-rd_vals = [1]
-lu_vals = [1]
-ld_vals = [1]
+def diagonalSum(limit):
+    current = 1
+    total = 1
+    for size in range(3, limit+1, 2):
+        offset = (size-1) * 4
+        current += offset
+        total += current + (current - (size-1)) + (current - (size-1) * 2) + (current - (size-1) * 3)
+    return total
 
-def ru_cache(n):
-    size = n + n + 1
-    offset = (size-1) * 4
-    current = ru_vals[n-1] + offset
-    ru_vals.append(current)
-    return current
+limit = 1001
 
-def rd_cache(n):
-    size = n + n + 1
-    offset = ((size-3) * 2) + ((size-2) * 2)
-    current = rd_vals[n-1] + offset
-    rd_vals.append(current)
-    return current
+print diagonalSum(limit)
 
-def lu_cache(n):
-    size = n + n + 1
-    offset = ((size-3)) + ((size-1)*3)
-    current = lu_vals[n-1] + offset
-    lu_vals.append(current)
-    return current
 
-def ld_cache(n):
-    size = n + n + 1
-    offset = size-3 + ((size-2)*3) + 1
-    current = ld_vals[n-1] + offset
-    ld_vals.append(current)
-    return current
-
-limit = 500
-
-print sum([ru_cache(n) for n in range(1, limit+1)] + [rd_cache(n) for n in range(1, limit+1)] + [lu_cache(n) for n in range(1, limit+1)] + [ld_cache(n) for n in range(1, limit+1)]) + 1
