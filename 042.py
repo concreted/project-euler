@@ -21,13 +21,11 @@ def wordToValue(word):
     word = [ord(c) - 64 for c in list(word.upper())]
     return sum(word)
 
-def quadratic(a, b, c):
-    x1 = (-b + math.sqrt(b**2 - 4*a*c)) / 2*a
-    x2 = (-b - math.sqrt(b**2 - 4*a*c)) / 2*a
-    return (x1, x2)
+def T(n):
+    return n*(n+1) / 2
 
 def isTriangleNumber(n):
-    index, other = quadratic(1,1,-2*n)
+    index = (math.sqrt(8*n + 1) - 1) / 2
     return int(index) == index
 
 f = open('resources/words.txt')
